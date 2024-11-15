@@ -9,41 +9,53 @@
     --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* 基础样式 */
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
     background: var(--background-color);
     color: var(--text-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+/* 容器布局 */
 .app-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
+/* 头部样式 */
 .app-header {
     text-align: center;
     margin-bottom: 2rem;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .app-header h1 {
     margin: 0;
     font-size: 2.5rem;
     color: var(--primary-color);
+    font-weight: 600;
 }
 
 .subtitle {
     color: var(--secondary-text);
     margin: 0.5rem 0 0;
+    font-size: 1.1rem;
 }
 
+/* 预览区域 */
 .preview-panel {
     background: white;
     border-radius: var(--radius-medium);
     box-shadow: var(--shadow);
-    padding: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    animation: slideUp 0.5s ease-in-out;
 }
 
 .preview-container {
@@ -53,9 +65,49 @@ body {
     justify-content: center;
     border: 2px dashed var(--border-color);
     border-radius: var(--radius-small);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.preview-container:hover {
+    border-color: var(--primary-color);
+    background: rgba(0, 112, 243, 0.02);
 }
 
 .preview-wrapper {
-    padding: 1rem;
+    padding: 2rem;
     text-align: center;
+    color: var(--secondary-text);
+}
+
+/* 动画 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 1rem;
+    }
+    
+    .app-header h1 {
+        font-size: 2rem;
+    }
+    
+    .preview-panel {
+        padding: 1rem;
+    }
 }
