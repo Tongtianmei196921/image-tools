@@ -2,15 +2,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // 初始化状态
     const state = {
         originalImage: null,
+        currentImage: null,
         processing: false,
-        supportedFormats: ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+        supportedFormats: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
+        currentRotation: 0,
+        isFlipped: false,
+        brightness: 100,
+        contrast: 100
     };
 
     // 获取DOM元素
-    const uploadBox = document.getElementById('uploadBox');
-    const fileInput = createFileInput();
+    const elements = {
+        uploadBox: document.getElementById('uploadBox'),
+        editTools: document.querySelector('.edit-tools'),
+        adjustmentControls: document.querySelector('.adjustment-controls'),
+        slider: document.getElementById('adjustmentSlider'),
+        applyBtn: document.querySelector('.apply-btn'),
+        cancelBtn: document.querySelector('.cancel-btn'),
+        fileInput: createFileInput()
+    };
 
-    // 创建隐藏的文件输入
+    // 创建文件输入
     function createFileInput() {
         const input = document.createElement('input');
         input.type = 'file';
@@ -49,13 +61,11 @@ document.addEventListener('DOMContentLoaded', () => {
     async function handleFile(file) {
         if (!file) return;
 
-        // 检查文件类型
         if (!state.supportedFormats.includes(file.type)) {
             showError('不支持的文件格式，请使用 JPG、PNG、WebP 或 GIF 格式的图片');
             return;
         }
 
-        // 检查文件大小 (10MB)
         if (file.size > 10 * 1024 * 1024) {
             showError('文件太大，请使用小于 10MB 的图片');
             return;
@@ -68,7 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const img = new Image();
                 img.onload = () => {
                     state.originalImage = img;
+                    state.currentImage = img;
                     displayImage(img);
+                    elements.editTools.style.display = 'block';
                     state.processing = false;
                 };
                 img.onerror = () => {
@@ -91,48 +103,128 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 显示图片
     function displayImage(img) {
-        uploadBox.innerHTML = '';
-        img.style.cssText = `
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        `;
-        uploadBox.appendChild(img);
+        elements.uploadBox.innerHTML = '';
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // 设置画布大小
+        canvas.width = img.width;
+        canvas.height = img.height;
+        
+        // 应用当前的变换
+        ctx.translate(canvas.width/2, canvas.height/2);
+        ctx.rotate(state.currentRotation * Math.PI/180);
+        if (state.isFlipped) ctx.scale(-1, 1);
+        ctx.translate(-canvas.width/2, -canvas.height/2);
+        
+        // 绘制图片
+        ctx.drawImage(img, 0, 0);
+        
+        // 应用滤镜
+        if (state.brightness !== 100 || state.contrast !== 100) {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            applyFilters(imageData.data);
+            ctx.putImageData(imageData, 0, 0);
+        }
+        
+        canvas.style.maxWidth = '100%';
+        canvas.style.height = 'auto';
+        elements.uploadBox.appendChild(canvas);
+    }
+
+    // 应用滤镜
+    function applyFilters(pixels) {
+        const brightness = state.brightness / 100;
+        const contrast = state.contrast / 100;
+        
+        for (let i = 0; i < pixels.length; i += 4) {
+            pixels[i] = pixels[i] * brightness * contrast;
+            pixels[i + 1] = pixels[i + 1] * brightness * contrast;
+            pixels[i + 2] = pixels[i + 2] * brightness * contrast;
+        }
+    }
+
+    // 工具按钮点击处理
+    document.querySelectorAll('.tool-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tool = btn.dataset.tool;
+            switch(tool) {
+                case 'rotate':
+                    state.currentRotation = (state.currentRotation + 90) % 360;
+                    displayImage(state.currentImage);
+                    break;
+                case 'flip':
+                    state.isFlipped = !state.isFlipped;
+                    displayImage(state.currentImage);
+                    break;
+                case 'brightness':
+                case 'contrast':
+                    showAdjustmentControls(tool);
+                    break;
+                case 'save':
+                    saveImage();
+                    break;
+            }
+        });
+    });
+
+    // 显示调整控制器
+    function showAdjustmentControls(tool) {
+        elements.adjustmentControls.style.display = 'flex';
+        elements.slider.value = state[tool];
+        
+        elements.applyBtn.onclick = () => {
+            state[tool] = parseInt(elements.slider.value);
+            displayImage(state.currentImage);
+            elements.adjustmentControls.style.display = 'none';
+        };
+        
+        elements.cancelBtn.onclick = () => {
+            elements.adjustmentControls.style.display = 'none';
+        };
+    }
+
+    // 保存图片
+    function saveImage() {
+        const canvas = elements.uploadBox.querySelector('canvas');
+        const link = document.createElement('a');
+        link.download = 'edited-image.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
     }
 
     // 事件监听：点击上传
-    uploadBox.addEventListener('click', () => {
+    elements.uploadBox.addEventListener('click', () => {
         if (!state.processing) {
-            fileInput.click();
+            elements.fileInput.click();
         }
     });
 
     // 事件监听：文件选择
-    fileInput.addEventListener('change', (e) => {
+    elements.fileInput.addEventListener('change', (e) => {
         if (e.target.files[0]) {
             handleFile(e.target.files[0]);
         }
     });
 
     // 事件监听：拖放
-    uploadBox.addEventListener('dragover', (e) => {
+    elements.uploadBox.addEventListener('dragover', (e) => {
         e.preventDefault();
         if (!state.processing) {
-            uploadBox.style.borderColor = '#0070f3';
-            uploadBox.style.backgroundColor = 'rgba(0, 112, 243, 0.02)';
+            elements.uploadBox.style.borderColor = '#0070f3';
+            elements.uploadBox.style.backgroundColor = 'rgba(0, 112, 243, 0.02)';
         }
     });
 
-    uploadBox.addEventListener('dragleave', () => {
-        uploadBox.style.borderColor = '';
-        uploadBox.style.backgroundColor = '';
+    elements.uploadBox.addEventListener('dragleave', () => {
+        elements.uploadBox.style.borderColor = '';
+        elements.uploadBox.style.backgroundColor = '';
     });
 
-    uploadBox.addEventListener('drop', (e) => {
+    elements.uploadBox.addEventListener('drop', (e) => {
         e.preventDefault();
-        uploadBox.style.borderColor = '';
-        uploadBox.style.backgroundColor = '';
+        elements.uploadBox.style.borderColor = '';
+        elements.uploadBox.style.backgroundColor = '';
         if (!state.processing && e.dataTransfer.files[0]) {
             handleFile(e.dataTransfer.files[0]);
         }
