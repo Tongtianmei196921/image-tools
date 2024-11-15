@@ -7,26 +7,23 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="loading">
-        <div class="loading-spinner"></div>
-        <p>正在加载...</p>
-    </div>
     <div class="app-container">
         <header class="app-header">
             <h1>图片工具集</h1>
             <p class="subtitle">专业的在线图片处理工具</p>
         </header>
         <main class="workspace">
-            <section class="preview-panel">
-                <div class="preview-container">
-                    <div class="preview-wrapper">
-                        <div class="upload-tip">
-                            <p>点击或拖放图片到此处</p>
-                            <p class="upload-tip-sub">支持 JPG、PNG、WebP、GIF 格式</p>
-                        </div>
-                    </div>
+            <div class="upload-area">
+                <div class="upload-box">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <h3>点击或拖放图片到此处</h3>
+                    <p>支持 JPG、PNG、WebP、GIF 格式</p>
                 </div>
-            </section>
+            </div>
         </main>
     </div>
     <script src="script.js"></script>
