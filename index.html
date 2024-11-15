@@ -1,84 +1,50 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图片工具集 | 专业的在线图片处理工具</title>
-    <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-    <div class="app-container">
-        <header class="app-header">
-            <h1>图片工具集</h1>
-            <p class="subtitle">专业的在线图片处理工具</p>
-        </header>
-        <main class="workspace">
-            <div class="upload-area">
-                <div class="upload-box" id="uploadBox">
-                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="17 8 12 3 7 8"/>
-                        <line x1="12" y1="3" x2="12" y2="15"/>
-                    </svg>
-                    <h3>点击或拖放图片到此处</h3>
-                    <p>支持 JPG、PNG、WebP、GIF 格式</p>
-                </div>
-            </div>
-            
-            <!-- 编辑工具区 -->
-            <div class="edit-tools" style="display: none;">
-                <div class="tool-group">
-                    <button class="tool-btn" data-tool="rotate">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                            <path d="M3 3v5h5"/>
-                        </svg>
-                        旋转
-                    </button>
-                    <button class="tool-btn" data-tool="flip">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 3v18"/>
-                            <path d="m17 8-5-5-5 5"/>
-                            <path d="m17 16-5 5-5-5"/>
-                        </svg>
-                        翻转
-                    </button>
-                    <button class="tool-btn" data-tool="brightness">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="5"/>
-                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                        </svg>
-                        亮度
-                    </button>
-                    <button class="tool-btn" data-tool="contrast">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M12 18a6 6 0 0 0 0-12v12z"/>
-                        </svg>
-                        对比度
-                    </button>
-                </div>
-                
-                <!-- 调整控制器 -->
-                <div class="adjustment-controls" style="display: none;">
-                    <input type="range" min="0" max="200" value="100" class="slider" id="adjustmentSlider">
-                    <button class="apply-btn">应用</button>
-                    <button class="cancel-btn">取消</button>
-                </div>
+<!-- 在 tool-group 中添加格式转换按钮 -->
+<div class="tool-group">
+    <button class="tool-btn" data-tool="rotate">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+        </svg>
+        旋转
+    </button>
+    <button class="tool-btn" data-tool="flip">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3v18"/>
+            <path d="m17 8-5-5-5 5"/>
+            <path d="m17 16-5 5-5-5"/>
+        </svg>
+        翻转
+    </button>
+    <!-- 新增格式转换按钮 -->
+    <button class="tool-btn" data-tool="format">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        格式转换
+    </button>
+    <button class="tool-btn" data-tool="brightness">
+        <!-- ... 其他按钮保持不变 ... -->
+    </button>
+</div>
 
-                <div class="tool-group">
-                    <button class="tool-btn primary" data-tool="save">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-                            <polyline points="17 21 17 13 7 13 7 21"/>
-                            <polyline points="7 3 7 8 15 8"/>
-                        </svg>
-                        保存
-                    </button>
-                </div>
-            </div>
-        </main>
+<!-- 添加格式选择对话框 -->
+<div class="format-dialog" style="display: none;">
+    <div class="format-options">
+        <h3>选择输出格式</h3>
+        <div class="format-buttons">
+            <button class="format-btn" data-format="image/jpeg">JPG</button>
+            <button class="format-btn" data-format="image/png">PNG</button>
+            <button class="format-btn" data-format="image/webp">WebP</button>
+            <button class="format-btn" data-format="image/gif">GIF</button>
+        </div>
+        <div class="quality-control">
+            <label for="quality">质量：<span id="qualityValue">80%</span></label>
+            <input type="range" id="quality" min="1" max="100" value="80">
+        </div>
+        <div class="dialog-buttons">
+            <button class="cancel-btn">取消</button>
+            <button class="apply-btn">转换</button>
+        </div>
     </div>
-    <script src="./script.js"></script>
-</body>
-</html>
+</div>
