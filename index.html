@@ -14,7 +14,7 @@
         </header>
         <main class="workspace">
             <!-- 工具栏 -->
-            <div class="toolbar">
+            <div class="toolbar" style="display: none;">
                 <div class="tool-group">
                     <button class="tool-btn" data-tool="rotate">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -42,15 +42,18 @@
             </div>
 
             <!-- 上传区域 -->
-            <div class="upload-area">
+            <div class="upload-area" id="uploadArea">
                 <div class="upload-box" id="uploadBox">
-                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="17 8 12 3 7 8"/>
-                        <line x1="12" y1="3" x2="12" y2="15"/>
-                    </svg>
+                    <div class="upload-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                    </div>
                     <h3>点击或拖放图片到此处</h3>
                     <p>支持 JPG、PNG、WebP、GIF 格式</p>
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
                 </div>
             </div>
         </main>
