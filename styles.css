@@ -10,34 +10,10 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
     background: var(--background-color);
     color: var(--text-color);
-}
-
-/* 加载动画 */
-#loading {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    display: none;
-}
-
-.loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid var(--primary-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 10px;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    -webkit-font-smoothing: antialiased;
 }
 
 /* 主容器 */
@@ -57,49 +33,52 @@ body {
     margin: 0;
     font-size: 2.5rem;
     color: var(--primary-color);
+    font-weight: 600;
 }
 
 .subtitle {
     color: var(--secondary-text);
     margin: 0.5rem 0 0;
+    font-size: 1.1rem;
 }
 
-/* 预览区域 */
-.preview-panel {
+/* 上传区域 */
+.upload-area {
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
+    padding: 2rem;
+    margin: 2rem 0;
 }
 
-.preview-container {
-    min-height: 300px;
+.upload-box {
     border: 2px dashed var(--border-color);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 8px;
+    padding: 3rem 2rem;
+    text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.preview-container:hover {
+.upload-box:hover {
     border-color: var(--primary-color);
     background: rgba(0, 112, 243, 0.02);
 }
 
-.preview-wrapper {
-    padding: 2rem;
-    text-align: center;
-}
-
-.upload-tip {
+.upload-box svg {
     color: var(--secondary-text);
+    margin-bottom: 1rem;
 }
 
-.upload-tip-sub {
+.upload-box h3 {
+    margin: 1rem 0;
+    color: var(--text-color);
+}
+
+.upload-box p {
+    margin: 0;
+    color: var(--secondary-text);
     font-size: 0.9rem;
-    margin-top: 0.5rem;
 }
 
 /* 响应式设计 */
@@ -110,5 +89,9 @@ body {
     
     .app-header h1 {
         font-size: 2rem;
+    }
+    
+    .upload-area {
+        padding: 1rem;
     }
 }
