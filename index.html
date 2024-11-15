@@ -59,3 +59,47 @@
     <script src="./script.js"></script>
 </body>
 </html>
+<!-- 在 upload-area 后面添加 -->
+<div class="edit-tools" style="display: none;">
+    <div class="tool-group">
+        <button class="tool-btn" data-tool="rotate">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+            </svg>
+            旋转
+        </button>
+        <button class="tool-btn" data-tool="flip">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 3v18"/>
+                <path d="m17 8-5-5-5 5"/>
+                <path d="m17 16-5 5-5-5"/>
+            </svg>
+            翻转
+        </button>
+        <button class="tool-btn" data-tool="brightness">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"/>
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+            亮度
+        </button>
+        <button class="tool-btn" data-tool="contrast">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 18a6 6 0 0 0 0-12v12z"/>
+            </svg>
+            对比度
+        </button>
+    </div>
+    <div class="tool-group">
+        <button class="tool-btn" data-tool="save">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                <polyline points="17 21 17 13 7 13 7 21"/>
+                <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            保存
+        </button>
+    </div>
+</div>
