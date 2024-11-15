@@ -1,10 +1,19 @@
-/* 基础样式 */
+/* 基础变量 */
 :root {
     --primary-color: #0070f3;
     --background-color: #f5f5f5;
     --text-color: #333;
     --secondary-text: #666;
     --border-color: #ddd;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --radius: 8px;
+}
+
+/* 重置样式 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -45,15 +54,15 @@ body {
 /* 上传区域 */
 .upload-area {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
     padding: 2rem;
     margin: 2rem 0;
 }
 
 .upload-box {
     border: 2px dashed var(--border-color);
-    border-radius: 8px;
+    border-radius: var(--radius);
     padding: 3rem 2rem;
     text-align: center;
     cursor: pointer;
@@ -81,6 +90,14 @@ body {
     font-size: 0.9rem;
 }
 
+/* 图片预览 */
+.preview-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    margin-top: 1rem;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
     .app-container {
@@ -93,5 +110,9 @@ body {
     
     .upload-area {
         padding: 1rem;
+    }
+    
+    .upload-box {
+        padding: 2rem 1rem;
     }
 }
