@@ -74,28 +74,109 @@ body {
     background: rgba(0, 112, 243, 0.02);
 }
 
-.upload-box svg {
-    color: var(--secondary-text);
+/* 编辑工具区 */
+.edit-tools {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.tool-group {
+    display: flex;
+    gap: 1rem;
     margin-bottom: 1rem;
 }
 
-.upload-box h3 {
-    margin: 1rem 0;
-    color: var(--text-color);
+.tool-group:last-child {
+    margin-bottom: 0;
+    justify-content: flex-end;
 }
 
-.upload-box p {
-    margin: 0;
-    color: var(--secondary-text);
-    font-size: 0.9rem;
-}
-
-/* 图片预览 */
-.preview-image {
-    max-width: 100%;
-    height: auto;
+.tool-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
     border-radius: var(--radius);
-    margin-top: 1rem;
+    background: white;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tool-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.tool-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.tool-btn.primary {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.tool-btn.primary:hover {
+    background: #0051c3;
+}
+
+/* 调整控制器 */
+.adjustment-controls {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: var(--radius);
+    margin: 1rem 0;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.slider {
+    flex: 1;
+    height: 4px;
+    -webkit-appearance: none;
+    background: #ddd;
+    border-radius: 2px;
+    outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.apply-btn, .cancel-btn {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.apply-btn {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.apply-btn:hover {
+    background: #0051c3;
+}
+
+.cancel-btn:hover {
+    background: #f0f0f0;
 }
 
 /* 响应式设计 */
@@ -108,11 +189,12 @@ body {
         font-size: 2rem;
     }
     
-    .upload-area {
-        padding: 1rem;
+    .tool-group {
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
-    .upload-box {
-        padding: 2rem 1rem;
+    .tool-btn {
+        min-width: 100px;
     }
 }
